@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { User } from './entities/create-user.entity';
-import { OutboxMessage } from './entities/outbox-table.entity';
+import { OutboxMessage } from '../outbox/entities/outbox-table.entity';
 
 @Injectable()
 export class CreateUserService {
@@ -13,6 +13,7 @@ export class CreateUserService {
       const savedUser = await manager.save(user);
 
       const outbox = manager.create(OutboxMessage, {
+        eventType: 'UserCreated',
         messagePayload: {
           userId: savedUser.id,
           name: savedUser.name,

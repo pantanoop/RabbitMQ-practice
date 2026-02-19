@@ -2,7 +2,7 @@ import { DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { join } from 'path';
 import { User } from '../create-user/entities/create-user.entity';
-import { OutboxMessage } from '../create-user/entities/outbox-table.entity';
+import { OutboxMessage } from '../outbox/entities/outbox-table.entity';
 
 dotenv.config();
 

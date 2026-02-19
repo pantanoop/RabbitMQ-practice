@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class OutboxTable1771240753081 implements MigrationInterface {
@@ -20,6 +19,11 @@ export class OutboxTable1771240753081 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'eventType',
+            type: 'var char',
+            isNullable: false,
+          },
+          {
             name: 'status',
             type: 'varchar',
             isNullable: false,
@@ -35,4 +39,3 @@ export class OutboxTable1771240753081 implements MigrationInterface {
     await queryRunner.dropTable('outbox_messages');
   }
 }
-
