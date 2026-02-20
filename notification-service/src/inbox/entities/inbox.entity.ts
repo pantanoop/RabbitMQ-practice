@@ -7,11 +7,14 @@ export class InboxMessage {
 
   @Index({ unique: true })
   @Column({ type: 'uuid' })
-  eventId: string;
+  messageId: string;
 
   @Column()
   eventType: string;
 
-  @Column('jsonb')
-  payload: any;
+  @Column()
+  handler: string;
+
+  @Column()
+  status: string;
 }

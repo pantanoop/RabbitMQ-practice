@@ -25,13 +25,13 @@ export class RabbitMQConsumer {
       try {
         const channel = await this.rabbit.getChannel(process.env.RABBITMQ_URL!);
 
-        await channel.assertExchange('users.fanout', 'fanout', {
+        await channel.assertExchange('sagitarius-a', 'fanout', {
           durable: true,
         });
-        const queue = await channel.assertQueue('notification_queue', {
+        const queue = await channel.assertQueue('notification.primary.queue', {
           durable: true,
         });
-        await channel.bindQueue(queue.queue, 'users.fanout', '');
+        await channel.bindQueue(queue.queue, 'sagitarius-a', '');
 
         await channel.consume(
           queue.queue,
@@ -64,7 +64,7 @@ export class RabbitMQConsumer {
 
     try {
       const exists = await this.inboxRepo.findOne({
-        where: { eventId: event.eventId },
+        where: { messageId: event.eventId },
       });
       if (exists) {
         this.logger.warn(`Duplicate event ignored: ${event.eventId}`);
@@ -72,16 +72,17 @@ export class RabbitMQConsumer {
       }
 
       const inbox = this.inboxRepo.create({
-        eventId: event.eventId,
+        messageId: event.eventId,
         eventType: event.type,
-        payload: event.payload,
+        handler: 'handleMessage',
+        status: 'CONSUMED',
       });
 
       await this.inboxRepo.save(inbox);
       this.logger.log(`Event ${event.eventId} stored in inbox`);
     } catch (err) {
       this.logger.error('DB operation failed', err);
-      throw err; 
+      throw err;
     }
   }
 }

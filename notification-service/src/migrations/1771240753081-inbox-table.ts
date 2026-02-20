@@ -14,14 +14,13 @@ export class InboxTable1771240753081 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'eventId',
+            name: 'messageId',
             type: 'uuid',
             isNullable: false,
-            isUnique: true,
           },
           {
-            name: 'payload',
-            type: 'jsonb',
+            name: 'handler',
+            type: 'varchar',
             isNullable: false,
           },
           {
@@ -33,7 +32,6 @@ export class InboxTable1771240753081 implements MigrationInterface {
             name: 'status',
             type: 'varchar',
             isNullable: false,
-            default: "'PENDING'",
           },
         ],
       }),

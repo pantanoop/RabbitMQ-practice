@@ -21,7 +21,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: postgres # default DB; services can create others
+      POSTGRES_DB: postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data # persistent volume
 
@@ -41,7 +41,7 @@ services:
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: create_user_db # this DB must exist or be auto-created by TypeORM
+      DB_DATABASE: create_user_db
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
 
   notification-service:
@@ -60,7 +60,7 @@ services:
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: notification_db # this DB must exist or be auto-created by TypeORM
+      DB_DATABASE: notification_db
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
 
   pgadmin:

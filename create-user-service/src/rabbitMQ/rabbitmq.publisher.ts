@@ -10,11 +10,10 @@ export class RabbitMQPublisher {
   async publish(event: any) {
     const channel = await this.rabbit.getChannel(process.env.RABBITMQ_URL!);
 
-    await channel.assertExchange('users.fanout', 'fanout', {
+    await channel.assertExchange('sagitarius-a', 'fanout', {
       durable: true,
     });
-
-    channel.publish('users.fanout', '', Buffer.from(JSON.stringify(event)), {
+    channel.publish('sagitarius-a', '', Buffer.from(JSON.stringify(event)), {
       persistent: true,
     });
 
